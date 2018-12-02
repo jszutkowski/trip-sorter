@@ -1,0 +1,19 @@
+version: "3"
+services:
+    composer:
+        restart: "no"
+        image: "composer:latest"
+        working_dir: "/app"
+        volumes:
+            - ".:/app"
+        command: "install"
+    php:
+        build:
+            context: "."
+            dockerfile: ".docker/php/Dockerfile"
+        working_dir: "/app"
+        volumes:
+            - ".:/app"
+        command: "php -S 0.0.0.0:${PORT_PHP} -t public"
+        ports:
+            - "${PORT_PHP}:${PORT_PHP}"

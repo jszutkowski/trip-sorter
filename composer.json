@@ -1,0 +1,23 @@
+{
+    "name": "jszutkowski/travel",
+    "description": "Recruitment task",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jarosław Szutkowski",
+            "email": "szutkowski@o2.pl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+      "psr-4": {
+        "App\\": "src/"
+      }
+    },
+    "require": {
+        "webmozart/assert": "^1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    }
+}
