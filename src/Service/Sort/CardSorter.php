@@ -51,23 +51,18 @@ class CardSorter
     {
         if (empty($data)) {
             $currentPlace->isFinished = true;
-            return $currentPlace;
-        } elseif(empty($data[$startLocation])) {
-            return $currentPlace;
         }
 
-        foreach ($data[$startLocation] as $cardKey => $card) {
+        foreach ($data[$startLocation] ?? [] as $cardKey => $card) {
 
             /** @var $card CardInterface */
-            $leftData = $data;
-            unset($leftData[$startLocation][$cardKey]);
-            if (empty($leftData[$startLocation])) {
-                unset($leftData[$startLocation]);
+            $forkData = $data;
+            unset($forkData[$startLocation][$cardKey]);
+            if (empty($forkData[$startLocation])) {
+                unset($forkData[$startLocation]);
             }
 
-            $newPlace = new Destination($card, $currentPlace);
-
-            $place = $this->findPath($leftData, $card->to(), $newPlace);
+            $place = $this->findPath($forkData, $card->to(), new Destination($card, $currentPlace));
             if ($place->isFinished) {
                 return $place;
             }
