@@ -14,8 +14,6 @@ use App\Service\Sort\CardSorter;
 
 class TripSorter
 {
-    const NO_RESULTS_MESSAGE = 'Way couldn\'t be found';
-
     /**
      * @var CardFactory
      */
