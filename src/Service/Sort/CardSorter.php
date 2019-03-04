@@ -54,15 +54,11 @@ class CardSorter
         }
 
         foreach ($data[$startLocation] ?? [] as $cardKey => $card) {
+            /* @var $card CardInterface */
 
-            /** @var $card CardInterface */
-            $forkData = $data;
-            unset($forkData[$startLocation][$cardKey]);
-            if (empty($forkData[$startLocation])) {
-                unset($forkData[$startLocation]);
-            }
+            $forkedData = $this->forkData($data, $startLocation, $cardKey);
 
-            $place = $this->findPath($forkData, $card->to(), new Destination($card, $currentPlace));
+            $place = $this->findPath($forkedData, $card->to(), new Destination($card, $currentPlace));
             if ($place->isFinished) {
                 return $place;
             }
@@ -84,5 +80,20 @@ class CardSorter
         }
 
         return $list;
+    }
+
+    /**
+     * @param array $data
+     * @param string $startLocation
+     * @param string $cardKey
+     * @return array
+     */
+    private function forkData(array $data, string $startLocation, string $cardKey): array
+    {
+        unset($data[$startLocation][$cardKey]);
+        if (empty($data[$startLocation])) {
+            unset($data[$startLocation]);
+        }
+        return $data;
     }
 }
